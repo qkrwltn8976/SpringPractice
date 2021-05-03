@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%@include file="../includes/header.jsp"%>>
+<%@include file="../includes/header.jsp"%>
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Board Read</h1>
@@ -38,8 +38,25 @@
 						<label>writer</label> 
 						<input class="form-control" name="writer" value="<c:out value="${board.writer}"/>"/>
 					</div>
-					<button type="submit" class="btn btn-default"><a href='/board/list'>List</a></button>
-					<button type="reset" class="btn btn-default"><a href='/board/modify?bno=<c:out value="${board.bno}"/>'>Modify</a></button>
+					
+					<form id="actionForm" action="/board/list" method="get">
+						<input type="hidden" name="pageNum" value="${cri.pageNum}">
+						<input type="hidden" name="amount" value="${cri.amount}">
+						<input type="hidden" name="bno" value="${board.bno}">
+					</form>
+					
+					<button type="button" class="btn btn-default listBtn"><a href='/board/list'>List</a></button>
+					<button type="button" class="btn btn-default modBtn"><a href='/board/modify?bno=<c:out value="${board.bno}"/>'>Modify</a></button>
+					<script>
+					
+					var actionForm = $("#actionForm");
+					
+					$(".listBtn").click(function(e) {
+						e.preventDefault();
+						
+						actionForm.submit();
+					});
+					</script>
 				</form>
 			</div>
 			<!-- /.panel-body -->
